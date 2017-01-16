@@ -21,18 +21,15 @@ alg = RandomForestClassifier(random_state=1, n_estimators=10, min_samples_split=
 
 kf = KFold(testdata.shape[0], random_state=1)
 
-# predictions = []
-# for train, test in kf.split(testdata):
-#     train_predicors = (testdata[predictors].iloc[train,:])
-#     train_target = testdata["point"].iloc[train]
-#     alg.fit(train_predicors, train_target)
-#     test_predictions = alg.predict(testdata[predictors].iloc[test,:])
-#     predictions.append(test_predictions)
-# print(predictions)
+predictions = []
+for train, test in kf.split(testdata):
+    train_predicors = (testdata[predictors].iloc[train,:])
+    train_target = testdata["point"].iloc[train]
+    alg.fit(train_predicors, train_target)
+    test_predictions = alg.predict(testdata[predictors].iloc[test,:])
+    predictions.append(test_predictions)
+print(predictions)
 
 # scores = cross_val_score(alg, testdata[predictors], testdata["point"], cv=kf.split(testdata))
 #
 # print(scores.mean())
-
-
-print()
