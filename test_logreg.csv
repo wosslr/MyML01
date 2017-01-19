@@ -1,0 +1,17 @@
+IND1	IND2	RES
+A	A	1
+A	B	0
+A	O	0
+A	AB	1
+B	A	0
+B	B	1
+B	O	0
+B	AB	1
+O	A	1
+O	B	1
+O	O	1
+O	AB	1
+AB	A	0
+AB	B	0
+AB	O	0
+AB	AB	1

@@ -19,9 +19,7 @@ print(testdata.describe())
 predictors = ["NameLength", "Ind1", "Ind2", "Gender"]
 targets = ["point"]
 
-# alg = LinearRegression()
-alg = LogisticRegression()
-# alg = RandomForestClassifier(random_state=1, n_estimators=10, min_samples_split=2, min_samples_leaf=1)
+alg = LinearRegression()
 
 kf = KFold(n_splits=10, random_state=1)
 
@@ -29,9 +27,7 @@ predictions = []
 for train, test in kf.split(testdata):
     # print("train: ", train, "test: ", test)
     train_predictors = testdata[predictors].iloc[train]
-    train_target = testdata[targets].iloc[train]
-    print(train_predictors)
-    print(train_target)
+    train_target = testdata["point"].iloc[train]
     alg.fit(train_predictors, train_target)
     test_predictions = alg.predict(testdata[predictors].iloc[test,:])
     predictions.append(test_predictions)
