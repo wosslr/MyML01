@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
 from sklearn import datasets
 from sklearn import svm
 from sklearn.utils import shuffle
@@ -20,6 +21,13 @@ def show_top_100(data):
         ax.matshow(pixels, cmap=plt.cm.gray)
         i += 1
     plt.show()
+
+def read_image_as_arr(file_name):
+    img = Image.open(file_name)
+    gray_img = img.convert("L")
+    im_array = np.array(gray_img)
+    im_array = im_array.ravel()
+    return im_array
 
 MAX_TRAIN_SIZE = 31000
 digits = datasets.load_digits()
@@ -48,13 +56,16 @@ mlp.fit(x[100:MAX_TRAIN_SIZE], y[100:MAX_TRAIN_SIZE])
 show_top_100(X[:100])
 
 while True:
-    index = input()
-    index = int(index)
-    pre_data = x[index]
-    # pre_data = pre_data.reshape[1, 1]
-    predication = mlp.predict([pre_data])
-    print(predication)
-    show_digit(X[index])
+    # index = input()
+    # index = int(index)
+    # pre_data = x[index]
+    # predication = mlp.predict([pre_data])
+    # print(predication)
+    # show_digit(X[index])
+    test_image = input()
+    test_data = read_image_as_arr(test_image)
+    predication = mlp.predict([test_data])
+    print(predication[0])
 
 # mlp.fit(x_train, y_train)
 #

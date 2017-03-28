@@ -9,11 +9,13 @@ from tflearn.data_preprocessing import ImagePreprocessing
 from tflearn.data_augmentation import ImageAugmentation
 import scipy
 import numpy as np
+
+from MyML_test11_get_ckpt_files import get_ckpt_file_seir, get_birds_files
 import argparse
 
-parser = argparse.ArgumentParser(description='Decide if an image is a picture of a bird')
-parser.add_argument('image', type=str, help='The image image file to check')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser(description='Decide if an image is a picture of a bird')
+# parser.add_argument('image', type=str, help='The image image file to check')
+# args = parser.parse_args()
 
 
 # Same network definition as before
@@ -43,19 +45,21 @@ network = regression(network, optimizer='adam',
 model = tflearn.DNN(network, tensorboard_verbose=0, checkpoint_path='bird-classifier.tfl.ckpt')
 # model.load("bird-classifier.tfl.ckpt-50912")
 model.load("bird-classifier.tfl.ckpt-53280")
-# Load the image file
-img = scipy.ndimage.imread(args.image, mode="RGB")
 
-# Scale it to 32x32
-img = scipy.misc.imresize(img, (32, 32), interp="bicubic").astype(np.float32, casting='unsafe')
+while True:
+    img_file = input()
+    img = scipy.ndimage.imread(img_file, mode="RGB")
 
-# Predict
-prediction = model.predict([img])
+    # Scale it to 32x32
+    img = scipy.misc.imresize(img, (32, 32), interp="bicubic").astype(np.float32, casting='unsafe')
 
-# Check the result.
-is_bird = np.argmax(prediction[0]) == 1
+    # Predict
+    prediction = model.predict([img])
 
-if is_bird:
-    print("That's a bird!")
-else:
-    print("That's not a bird!")
+    # Check the result.
+    is_bird = np.argmax(prediction[0]) == 1
+
+    if is_bird:
+        print("That's a bird!")
+    else:
+        print("That's not a bird!")
